@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gocql/gocql"
+	"github.com/scylladb/gocql"
 )
 
 var (

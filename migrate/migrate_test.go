@@ -15,7 +15,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gocql/gocql"
+	"github.com/scylladb/gocql"
 	. "github.com/scylladb/gocqlx/gocqlxtest"
 	"github.com/scylladb/gocqlx/migrate"
 )

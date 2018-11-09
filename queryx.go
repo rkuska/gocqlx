@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/gocql/gocql"
+	"github.com/scylladb/gocql"
 	"github.com/scylladb/gocqlx/reflectx"
 )
 
