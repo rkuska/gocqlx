@@ -11,25 +11,26 @@ import (
 
 	"github.com/gocql/gocql"
 	"github.com/scylladb/gocqlx/reflectx"
+	ddgocql "gopkg.in/DataDog/dd-trace-go.v1/contrib/gocql/gocql"
 )
 
 // Get is a convenience function for creating iterator and calling Get.
 //
 // DEPRECATED use Queryx.Get or Queryx.GetRelease.
-func Get(dest interface{}, q *gocql.Query) error {
+func Get(dest interface{}, q *ddgocql.Query) error {
 	return Iter(q).Get(dest)
 }
 
 // Select is a convenience function for creating iterator and calling Select.
 //
 // DEPRECATED use Queryx.Select or Queryx.SelectRelease.
-func Select(dest interface{}, q *gocql.Query) error {
+func Select(dest interface{}, q *ddgocql.Query) error {
 	return Iter(q).Select(dest)
 }
 
 // Iterx is a wrapper around gocql.Iter which adds struct scanning capabilities.
 type Iterx struct {
-	*gocql.Iter
+	*ddgocql.Iter
 	err error
 
 	unsafe bool
@@ -41,7 +42,7 @@ type Iterx struct {
 }
 
 // Iter creates a new Iterx from gocql.Query using a default mapper.
-func Iter(q *gocql.Query) *Iterx {
+func Iter(q *ddgocql.Query) *Iterx {
 	return &Iterx{
 		Iter:   q.Iter(),
 		Mapper: DefaultMapper,

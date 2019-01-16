@@ -11,8 +11,8 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/gocql/gocql"
 	"github.com/scylladb/gocqlx/reflectx"
+	ddgocql "gopkg.in/DataDog/dd-trace-go.v1/contrib/gocql/gocql"
 )
 
 // CompileNamedQuery translates query with named parameters in a form
@@ -82,14 +82,14 @@ func allowedBindRune(b byte) bool {
 
 // Queryx is a wrapper around gocql.Query which adds struct binding capabilities.
 type Queryx struct {
-	*gocql.Query
+	*ddgocql.Query
 	Names  []string
 	Mapper *reflectx.Mapper
 	err    error
 }
 
 // Query creates a new Queryx from gocql.Query using a default mapper.
-func Query(q *gocql.Query, names []string) *Queryx {
+func Query(q *ddgocql.Query, names []string) *Queryx {
 	return &Queryx{
 		Query:  q,
 		Names:  names,
