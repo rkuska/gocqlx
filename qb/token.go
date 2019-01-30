@@ -78,3 +78,73 @@ func (t TokenBuilder) cmp(op op, names []string) Cmp {
 		value:  Fn("token", s...),
 	}
 }
+
+// TokenExactBuilder helps implement pagination using exact comparison to token value.
+type TokenExactBuilder []string
+
+// TokenExact creates a new TokenExactBuilder.
+func TokenExact(columns ...string) TokenExactBuilder {
+	return TokenExactBuilder(columns)
+}
+
+// Eq produces token(column)=?.
+func (t TokenExactBuilder) Eq() Cmp {
+	return t.cmp(eq, "")
+}
+
+// EqNamed produces token(column)=? with a custom parameter name.
+func (t TokenExactBuilder) EqNamed(name string) Cmp {
+	return t.cmp(eq, name)
+}
+
+// Lt produces token(column)<?.
+func (t TokenExactBuilder) Lt() Cmp {
+	return t.cmp(lt, "")
+}
+
+// LtNamed produces token(column)<? with a custom parameter name.
+func (t TokenExactBuilder) LtNamed(name string) Cmp {
+	return t.cmp(lt, name)
+}
+
+// LtOrEq produces token(column)<=?.
+func (t TokenExactBuilder) LtOrEq() Cmp {
+	return t.cmp(leq, "")
+}
+
+// LtOrEqNamed produces token(column)<=? with a custom parameter name.
+func (t TokenExactBuilder) LtOrEqNamed(name string) Cmp {
+	return t.cmp(leq, name)
+}
+
+// Gt produces token(column)>?.
+func (t TokenExactBuilder) Gt() Cmp {
+	return t.cmp(gt, "")
+}
+
+// GtNamed produces token(column)>? with a custom parameter name.
+func (t TokenExactBuilder) GtNamed(name string) Cmp {
+	return t.cmp(gt, name)
+}
+
+// GtOrEq produces token(column)>=?.
+func (t TokenExactBuilder) GtOrEq() Cmp {
+	return t.cmp(geq, "")
+}
+
+// GtOrEqNamed produces token(column)>=? with a custom parameter name.
+func (t TokenExactBuilder) GtOrEqNamed(name string) Cmp {
+	return t.cmp(geq, name)
+}
+
+func (t TokenExactBuilder) cmp(op op, name string) Cmp {
+	s := name
+	if s == "" {
+		s = "token"
+	}
+	return Cmp{
+		op:     op,
+		column: fmt.Sprint("token(", strings.Join(t, ","), ")"),
+		value:  param(s),
+	}
+}
